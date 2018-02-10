@@ -37,7 +37,7 @@
 
         <activity
             android:name=".LocationChooser"
-            android:label="@string/title_activity_location_chooser"></activity>
+            android:label="@string/title_activity_location_chooser" />
     </application>
 
 </manifest>
