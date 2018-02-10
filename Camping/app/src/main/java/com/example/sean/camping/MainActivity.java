@@ -47,7 +47,11 @@ public class MainActivity extends AppCompatActivity {
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
+                try {
+                    getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -67,22 +71,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
-    public void getWeatherStuff(double latitude, double longitude) {
+    public void getWeatherStuff(double latitude, double longitude) throws JSONException {
         JsonTask task = new JsonTask();
-        task.execute("https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + ", " + longitude);
-        JSONObject currentWeather = null;
-        try {
-          currentWeather = weatherData.getJSONObject("currently");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            String summary = currentWeather.getString("summary");
-            txtJson.setText(summary);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String finalurl = "https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + "," + longitude;
+        Log.d("Camping", finalurl);
+        task.execute(finalurl);
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
@@ -150,7 +143,22 @@ public class MainActivity extends AppCompatActivity {
                 pd.dismiss();
             }
             try {
+                Log.d("Camping", result);
                 weatherData = new JSONObject(result);
+                Log.d("data", weatherData.getString("timezone"));
+                JSONObject currentWeather = null;
+                try {
+                    currentWeather = weatherData.getJSONObject("currently");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    String summary = currentWeather.getString("summary");
+                    txtJson.setText(summary);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
