@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class LocationChooser extends FragmentActivity implements OnMapReadyCallback {
@@ -38,11 +39,16 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng bing = new LatLng(42.05, -76.0);
-        mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(bing));
+        // Add a marker in Binghamton and move the camera
+        final LatLng BING = new LatLng(42.05, -76.0);
+        Marker bing = mMap.addMarker(new MarkerOptions()
+                                    .position(BING)
+                                    .title("Camping Location")
+                                    .snippet("Location: " + BING.latitude + ", " + BING.longitude)
+                                    .draggable(true));
+        //mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(BING));
     }
 
-
+    
 }
