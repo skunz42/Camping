@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Camping</string>
+    <string name="title_activity_location_chooser">Choose Your Location</string>
 </resources>
