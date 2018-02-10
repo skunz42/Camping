@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.widget.Toast;
 
 
-public class LocationChooser extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+public class LocationChooser extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     private LatLng mPos;
@@ -52,6 +52,7 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
                                     .draggable(true));
         //mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
         mMap.setOnMarkerDragListener(this);
+        mMap.setOnMarkerClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
     }
 
@@ -80,4 +81,11 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
                 + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        mPos = marker.getPosition();
+        Toast.makeText(LocationChooser.this, "Point coordinates: " + mPos.latitude
+                + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
+        return true;
+    }
 }
