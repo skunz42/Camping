@@ -1,5 +1,6 @@
 package com.example.sean.camping;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -80,4 +81,12 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
                 + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("mapLat", mPos.latitude);
+        intent.putExtra("mapLong", mPos.longitude);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

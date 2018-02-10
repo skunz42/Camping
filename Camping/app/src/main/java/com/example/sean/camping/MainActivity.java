@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txtJson;
     ProgressDialog pd;
     Button btnHit;
+    EditText txtLat;
+    EditText txtLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +41,48 @@ public class MainActivity extends AppCompatActivity {
 
         txtJson = (TextView) findViewById(R.id.jsonTxt);
         btnHit = (Button) findViewById(R.id.button3);
+        txtLat = (EditText) findViewById(R.id.latitudeNum);
+        txtLon = (EditText) findViewById(R.id.longitudeNum);
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getWeatherStuff();
+                getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
             }
         });
     }
 
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, LocationChooser.class);
-        startActivity(intent);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                txtLat.setText((Double.toString(data.getDoubleExtra("mapLat", 0.0))));
+                txtLon.setText((Double.toString(data.getDoubleExtra("mapLong", 0.0))));
+            }
+        }
     }
 
-    public void getWeatherStuff() {
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, LocationChooser.class);
+        startActivityForResult(intent, 1);
+    }
+
+    public void getWeatherStuff(double latitude, double longitude) {
         JsonTask task = new JsonTask();
-        task.execute("https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/42.0893553, 75.96970490000001");
+        task.execute("https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + ", " + longitude);
+        JSONObject currentWeather = null;
+        try {
+          currentWeather = weatherData.getJSONObject("currently");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String summary = currentWeather.getString("summary");
+            txtJson.setText(summary);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
@@ -120,7 +149,11 @@ public class MainActivity extends AppCompatActivity {
             if (pd.isShowing()){
                 pd.dismiss();
             }
-            txtJson.setText(result);
+            try {
+                weatherData = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
