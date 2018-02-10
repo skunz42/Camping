@@ -39,9 +39,9 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng bing = new LatLng(42.05, -76.0);
+        mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(bing));
     }
 
 
