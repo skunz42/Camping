@@ -1,3 +1,5 @@
+//Sean Kunz
+
 package com.example.sean.camping;
 
 import android.content.Intent;
