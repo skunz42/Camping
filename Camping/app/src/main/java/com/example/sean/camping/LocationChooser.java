@@ -11,9 +11,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class LocationChooser extends FragmentActivity implements OnMapReadyCallback {
+import android.widget.Toast;
+
+
+public class LocationChooser extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
+    private LatLng mPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +44,40 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
         mMap = googleMap;
 
         // Add a marker in Binghamton and move the camera
-        final LatLng BING = new LatLng(42.05, -76.0);
+        mPos = new LatLng(42.05, -76.0);
         Marker bing = mMap.addMarker(new MarkerOptions()
-                                    .position(BING)
+                                    .position(mPos)
                                     .title("Camping Location")
-                                    .snippet("Location: " + BING.latitude + ", " + BING.longitude)
+                                    //.snippet("Location: " + BING.latitude + ", " + BING.longitude)
                                     .draggable(true));
         //mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(BING));
+        mMap.setOnMarkerDragListener(this);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
     }
 
-    
+    public double getLatitude() {
+        return mPos.latitude;
+    }
+
+    public double getLongitude() {
+        return mPos.longitude;
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        mPos = marker.getPosition();
+        Toast.makeText(LocationChooser.this, "Point coordinates: " + mPos.latitude
+                + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
+    }
+
 }
