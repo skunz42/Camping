@@ -1,4 +1,5 @@
 //Sean Kunz
+//and the bois
 
 package com.example.sean.camping;
 
@@ -75,16 +76,24 @@ public class MainActivity extends AppCompatActivity {
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double currentLat = Double.parseDouble(txtLat.getText().toString());
-                double currentLong = Double.parseDouble(txtLon.getText().toString());
-                if(currentLat > 90 || currentLat < -90 || currentLong > 180 || currentLong < -180) {
-                    Toast.makeText(MainActivity.this, "COORDINATES OUT OF RANGE!", Toast.LENGTH_LONG).show();
+                String sLat = txtLat.getText().toString();
+                String sLong = txtLon.getText().toString();
+
+                if (sLat.matches("") || sLong.matches("")) {
+                    Toast.makeText(MainActivity.this, "Need valid input", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    try {
-                        getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    double currentLat = Double.parseDouble(sLat);
+                    double currentLong = Double.parseDouble(sLong);
+                    if(currentLat > 90 || currentLat < -90 || currentLong > 180 || currentLong < -180) {
+                        Toast.makeText(MainActivity.this, "COORDINATES OUT OF RANGE!", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        try {
+                            getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -110,9 +119,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, LocationChooser.class);
-        intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
-        intent.putExtra("long", Double.parseDouble(txtLon.getText().toString()));
-        startActivityForResult(intent, 1);
+        if (txtLat.getText().toString().matches("") || txtLon.getText().toString().matches("")) {
+            Toast.makeText(MainActivity.this, "Please input coordinates", Toast.LENGTH_LONG).show();
+        }
+        else {
+            intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
+            intent.putExtra("long", Double.parseDouble(txtLon.getText().toString()));
+            startActivityForResult(intent, 1);
+        }
     }
 
     public void getWeatherStuff(double latitude, double longitude) throws JSONException {
