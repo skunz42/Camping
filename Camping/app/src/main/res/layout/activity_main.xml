@@ -71,16 +71,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
-    <TextView
-        android:id="@+id/longitudeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Enter Longitude:"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitudeNum" />
 
     <TextView
         android:id="@+id/dateTxt"
