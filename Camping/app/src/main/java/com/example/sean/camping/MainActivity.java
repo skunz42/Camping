@@ -3,6 +3,7 @@
 
 package com.example.sean.camping;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +29,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +41,26 @@ public class MainActivity extends AppCompatActivity {
     Button btnHit;
     EditText txtLat;
     EditText txtLon;
+    TextView txtDate;
+
+    Calendar dateCalender = Calendar.getInstance();
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        txtDate.setText(sdf.format(dateCalender.getTime()));
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            dateCalender.set(Calendar.YEAR, year);
+            dateCalender.set(Calendar.MONTH, month);
+            dateCalender.set(Calendar.DAY_OF_MONTH, day);
+            updateLabel();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         btnHit = (Button) findViewById(R.id.button3);
         txtLat = (EditText) findViewById(R.id.latitudeNum);
         txtLon = (EditText) findViewById(R.id.longitudeNum);
+        txtDate = (TextView) findViewById(R.id.dateTxt);
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+            }
+        });
+
+        txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(MainActivity.this, date, dateCalender.get(Calendar.YEAR), dateCalender.get(Calendar.MONTH), dateCalender.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
@@ -102,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void getWeatherStuff(double latitude, double longitude) throws JSONException {
         JsonTask task = new JsonTask();
-        String finalurl = "https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + "," + longitude;
+        String finalurl = "https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + "," + longitude + "," + (dateCalender.getTimeInMillis() / 1000);
         Log.d("Camping", finalurl);
         task.execute(finalurl);
     }
@@ -184,7 +218,9 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     String summary = currentWeather.getString("summary");
-                    txtJson.setText(summary);
+                    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy", Locale.US);
+                    String toSet = "The weather on " + format.format(dateCalender.getTime()) + " is " + summary + ".";
+                    txtJson.setText(toSet);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
