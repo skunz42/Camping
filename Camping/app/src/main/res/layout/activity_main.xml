@@ -23,14 +23,16 @@
         android:layout_width="101dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:onClick="sendMessage"
-        android:text="Go To Map" />
-    <Button
+        android:text="Go To Map"/>
+ <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:onClick="getWeatherStuff"
         android:text="Get Weather"
         app:layout_constraintBaseline_toBaselineOf="@+id/button2"
@@ -45,6 +47,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Enter Latitude"
+        android:text="0.0"
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/longitudeNum"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +64,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Enter Longitude"
+        android:text="0.0"
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/jsonTxt"
         app:layout_constraintEnd_toEndOf="parent"
