@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:text="Camping Weather App"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -25,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:onClick="sendMessage"
         android:text="Go To Map"
+        app:layout_constraintBottom_toTopOf="@+id/latitudeNum"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,46 +48,32 @@
         android:id="@+id/latitudeNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Enter Latitude"
         android:inputType="numberSigned|numberDecimal"
-        android:text="42"
+        app:layout_constraintBottom_toTopOf="@+id/longitudeNum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitudeTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <EditText
         android:id="@+id/longitudeNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
         android:ems="10"
+        android:hint="Enter Longitude"
         android:inputType="numberSigned|numberDecimal"
-        android:text="-76"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longitudeTxt" />
-
-    <TextView
-        android:id="@+id/latitudeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Enter Latitude:"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        app:layout_constraintBottom_toTopOf="@+id/jsonTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <TextView
-        android:id="@+id/longitudeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Enter Longitude:"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitudeNum" />
 
 </android.support.constraint.ConstraintLayout>
