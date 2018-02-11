@@ -109,7 +109,6 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
         mPos = latLng;
         mark = mMap.addMarker(new MarkerOptions()
                 .position(mPos)
-                .title("Camping Location")
-                .snippet("Location: " + mPos.latitude + ", " + mPos.longitude));
+                .title("Camping Location"));
     }
 }
