@@ -15,10 +15,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.widget.Toast;
 
 
-public class LocationChooser extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMarkerDragListener {
+public class LocationChooser extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
     private LatLng mPos;
+    private Marker mark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +47,12 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
 
         // Add a marker in Binghamton and move the camera
         mPos = new LatLng(42.05, -76.0);
-        Marker bing = mMap.addMarker(new MarkerOptions()
-                                    .position(mPos)
-                                    .title("Camping Location")
-                                    //.snippet("Location: " + BING.latitude + ", " + BING.longitude)
-                                    .draggable(true));
-        //mMap.addMarker(new MarkerOptions().position(bing).title("Marker in Binghamton"));
-        mMap.setOnMarkerDragListener(this);
+        mark = null;
+        
+        //mMap.setOnMarkerDragListener(this);
         mMap.setOnMarkerClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
+        mMap.setOnMapLongClickListener(this);
     }
 
     public double getLatitude() {
@@ -65,14 +63,17 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
         return mPos.longitude;
     }
 
-    @Override
+    /*@Override
     public void onMarkerDragStart(Marker marker) {
 
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
-
+        for (int i = 0; i < 100; i++) {
+            mPos = marker.getPosition();
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
         mPos = marker.getPosition();
         Toast.makeText(LocationChooser.this, "Point coordinates: " + mPos.latitude
                 + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -96,5 +97,17 @@ public class LocationChooser extends FragmentActivity implements OnMapReadyCallb
         Toast.makeText(LocationChooser.this, "Point coordinates: " + mPos.latitude
                 + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
         return true;
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        if (mark != null) {
+            mark.remove();
+        }
+        mPos = latLng;
+        mark = mMap.addMarker(new MarkerOptions()
+                .position(mPos)
+                .title("Camping Location")
+                .snippet("Location: " + mPos.latitude + ", " + mPos.longitude));
     }
 }
