@@ -206,15 +206,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("data", weatherData.getString("timezone"));
                 JSONObject currentWeather = null;
                 try {
-                    currentWeather = weatherData.getJSONObject("currently");
+                    currentWeather = weatherData.getJSONObject("daily");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 try {
-                    String summary = currentWeather.getString("summary");
+                    JSONArray dailyData = currentWeather.getJSONArray("data");
+                    JSONObject dataHolder = dailyData.getJSONObject(0);
+                    String summary = dataHolder.getString("summary");
                     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy", Locale.US);
-                    String toSet = "The weather on " + format.format(dateCalender.getTime()) + " is " + summary + ".";
+                    String toSet = "The weather on " + format.format(dateCalender.getTime()) + " is " + summary + ".\n";
+                    toSet = toSet + "Temperature Low: " + dataHolder.getString("temperatureLow") + "\n";
+                    toSet = toSet + "Humidity: " + dataHolder.getString("humidity") + "\n";
+                    toSet = toSet + "Chance of Precipitation: " + dataHolder.getString("precipProbability") + "\n";
                     txtJson.setText(toSet);
                 } catch (JSONException e) {
                     e.printStackTrace();
