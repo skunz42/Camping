@@ -227,7 +227,24 @@ public class MainActivity extends AppCompatActivity {
                     toSet = toSet + "Temperature Low: " + dataHolder.getString("temperatureLow") + "\n";
                     toSet = toSet + "Humidity: " + dataHolder.getString("humidity") + "\n";
                     toSet = toSet + "Chance of Precipitation: " + dataHolder.getString("precipProbability") + "\n";
-                    txtJson.setText(toSet);
+                    toSet = toSet + "\n" + "We recommend:\n";
+                    if ((Double.parseDouble(dataHolder.getString("temperatureLow")) > 0) && (Double.parseDouble(dataHolder.getString("temperatureLow")) < 40)) {
+                        toSet = toSet + "40 Degree Sleeping Bag\n";
+                        toSet = toSet + "Tent or Hammock\n";
+                        toSet = toSet + "Light Jacket\n";
+                    }
+                    else {
+                        toSet = toSet + "0 Degree Sleeping Bag\n";
+                        toSet = toSet + "Tent\n";
+                        toSet = toSet + "Proper Winter Clothing\n";
+                    }
+
+                    toSet = toSet + "First Aid Kit\n";
+                    toSet = toSet + "Food and Water\n";
+                    toSet = toSet + "Flashlight\n";
+                    toSet = toSet + "Fire-starter\n";
+
+                        txtJson.setText(toSet);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
