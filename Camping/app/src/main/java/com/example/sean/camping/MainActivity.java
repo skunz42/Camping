@@ -16,12 +16,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -136,9 +133,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void getWeatherStuff(double latitude, double longitude) throws JSONException {
         JsonTask task = new JsonTask();
-        String finalurl = "https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + "," + longitude + "," + (dateCalender.getTimeInMillis() / 1000);
-        Log.d("Camping", finalurl);
-        task.execute(finalurl);
+        if(Math.abs(dateCalender.getTimeInMillis() / 1000 - System.currentTimeMillis() / 1000) >= 604800) {
+            Toast.makeText(MainActivity.this, "Date is more than a week out! No weather data found!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            String finalurl = "https://api.darksky.net/forecast/f5b45457cb3fe9337aa6a94c6dc568d1/" + latitude + "," + longitude + "," + (dateCalender.getTimeInMillis() / 1000);
+            Log.d("Camping", finalurl);
+            task.execute(finalurl);
+        }
     }
 
     private class JsonTask extends AsyncTask<String, String, String> {
