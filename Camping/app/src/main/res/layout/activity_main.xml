@@ -50,6 +50,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberSigned|numberDecimal"
+        android:text="42"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/latitudeTxt" />
 
@@ -61,6 +62,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="numberSigned|numberDecimal"
+        android:text="-76"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/longitudeTxt" />
 

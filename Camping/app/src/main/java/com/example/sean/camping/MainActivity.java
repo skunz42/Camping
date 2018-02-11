@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, LocationChooser.class);
+        intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
+        intent.putExtra("long", Double.parseDouble(txtLon.getText().toString()));
         startActivityForResult(intent, 1);
     }
 

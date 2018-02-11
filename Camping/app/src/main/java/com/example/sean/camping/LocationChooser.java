@@ -52,13 +52,16 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
         mMap = googleMap;
 
         // Add a marker in Binghamton and move the camera
-        mPos = new LatLng(42.05, -76.0);
+        mPos = new LatLng(getIntent().getExtras().getDouble("lat"), getIntent().getExtras().getDouble("long"));
         mark = null;
-        
         //mMap.setOnMarkerDragListener(this);
         mMap.setOnMarkerClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
         mMap.setOnMapLongClickListener(this);
+        mark = mMap.addMarker(new MarkerOptions()
+                .position(mPos)
+                .title("Camping Location")
+                .snippet("Location: " + mPos.latitude + ", " + mPos.longitude));
     }
 
     public double getLatitude() {
