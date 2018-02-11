@@ -119,8 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, LocationChooser.class);
-        if (txtLat.getText().toString().matches("") || txtLon.getText().toString().matches("")) {
+        if ((txtLat.getText().toString().matches("") && !txtLon.getText().toString().matches("")) || (txtLon.getText().toString().matches("") && !txtLat.getText().toString().matches(""))) {
             Toast.makeText(MainActivity.this, "Please input coordinates", Toast.LENGTH_LONG).show();
+        }
+        else if (txtLat.getText().toString().matches("") && txtLon.getText().toString().matches("")) {
+            intent.putExtra("lat", 0);
+            intent.putExtra("lon", 0);
+            startActivityForResult(intent, 1);
         }
         else {
             intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
