@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject dataHolder = dailyData.getJSONObject(0);
                     String summary = dataHolder.getString("summary");
                     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy", Locale.US);
-                    String toSet = "The weather on " + format.format(dateCalender.getTime()) + " is " + summary + ".\n";
+                    String toSet = "The weather on " + format.format(dateCalender.getTime()) + " is " + summary + "\n";
                     toSet = toSet + "Temperature Low: " + dataHolder.getString("temperatureLow") + "\n";
                     toSet = toSet + "Humidity: " + dataHolder.getString("humidity") + "\n";
                     toSet = toSet + "Chance of Precipitation: " + dataHolder.getString("precipProbability") + "\n";
