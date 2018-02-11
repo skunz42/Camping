@@ -85,9 +85,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, LocationChooser.class);
-        intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
-        intent.putExtra("long", Double.parseDouble(txtLon.getText().toString()));
-        startActivityForResult(intent, 1);
+        if (txtLat.getText().toString().matches("") || txtLon.getText().toString().matches("")) {
+            Toast.makeText(MainActivity.this, "Please input coordinates", Toast.LENGTH_LONG).show();
+        }
+        else {
+            intent.putExtra("lat", Double.parseDouble(txtLat.getText().toString()));
+            intent.putExtra("long", Double.parseDouble(txtLon.getText().toString()));
+            startActivityForResult(intent, 1);
+        }
     }
 
     public void getWeatherStuff(double latitude, double longitude) throws JSONException {
