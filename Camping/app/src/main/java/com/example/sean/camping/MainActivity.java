@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,10 +48,17 @@ public class MainActivity extends AppCompatActivity {
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                double currentLat = Double.parseDouble(txtLat.getText().toString());
+                double currentLong = Double.parseDouble(txtLon.getText().toString());
+                if(currentLat > 90 || currentLat < -90 || currentLong > 180 || currentLong < -180) {
+                    Toast.makeText(MainActivity.this, "COORDINATES OUT OF RANGE!", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        getWeatherStuff(Double.parseDouble(txtLat.getText().toString()), Double.parseDouble(txtLon.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
