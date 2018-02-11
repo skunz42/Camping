@@ -37,16 +37,6 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -55,7 +45,6 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
         mPos = new LatLng(42.05, -76.0);
         mark = null;
         
-        //mMap.setOnMarkerDragListener(this);
         mMap.setOnMarkerClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
         mMap.setOnMapLongClickListener(this);
@@ -68,26 +57,6 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
     public double getLongitude() {
         return mPos.longitude;
     }
-
-    /*@Override
-    public void onMarkerDragStart(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-        for (int i = 0; i < 100; i++) {
-            mPos = marker.getPosition();
-        }
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mPos));
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        mPos = marker.getPosition();
-        Toast.makeText(LocationChooser.this, "Point coordinates: " + mPos.latitude
-                + ", " + mPos.longitude, Toast.LENGTH_LONG).show();
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -118,7 +87,6 @@ public class LocationChooser extends AppCompatActivity implements OnMapReadyCall
         }
         mPos = latLng;
         mark = mMap.addMarker(new MarkerOptions()
-                .position(mPos)
-                .title("Camping Location"));
+                .position(mPos));
     }
 }
